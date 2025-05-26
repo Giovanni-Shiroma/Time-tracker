@@ -6,7 +6,7 @@
             </span>
             <span>Novo projeto</span>
         </router-link>
-        <table class="table is-fullwidth">
+        <table class="table is-fullwidth mt-2">
             <thead>
                 <tr>
                     <th>ID</th>
@@ -58,3 +58,17 @@ export default defineComponent({
     }
 })
 </script>
+
+<style scoped>
+.table {
+    background-color: var(--bg-primario);
+}
+
+.table td {
+    color: var(--texto-primario);
+}
+
+.table th {
+    color: var(--texto-primario);
+}
+</style>

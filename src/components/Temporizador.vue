@@ -1,17 +1,11 @@
 <template>
-    <div class="is-flex is-align-items-center is-justify-content-space-between">
+    <div class="is-flex is-align-items-center is-justify-content-end">
         <Cronometro :tempoEmSegundos="tempoEmSegundos" />
-        <button class="button" @click="iniciar" :disabled="cronometroRodando">
+        <button class="button ml-4" @click="alternar">
             <span class="icon">
-                <i class="fas fa-play"></i>
+                <i :class="cronometroRodando ? 'fas fa-stop' : 'fas fa-play'"></i>
             </span>
-            <span>play</span>
-        </button>
-        <button class="button" @click="finalizar" :disabled="!cronometroRodando">
-            <span class="icon">
-                <i class="fas fa-stop"></i>
-            </span>
-            <span>stop</span>
+            <span>{{ cronometroRodando ? 'stop' : 'start' }}</span>
         </button>
     </div>
 </template>
@@ -34,6 +28,10 @@ export default defineComponent({
         idProjeto: {
             type: String,
             required: false,
+        },
+        descricaoTarefa: {
+            type: String,
+            required: true,
         }
     },
     mixins: [notificacaoMixin],
@@ -46,14 +44,18 @@ export default defineComponent({
     },
     methods: {
         iniciar() {
-            const projeto = this.projetos.find((p) => p.id == this.idProjeto);
-            if (!projeto) {
-                this.notificar(TipoNotificacao.ATENCAO, 'OPS!', 'Selecione um projeto antes de finalizar a tarefa!')
+            // const projeto = this.projetos.find((p) => p.id == this.idProjeto);
+            // if (!projeto) {
+            //     this.notificar(TipoNotificacao.ATENCAO, 'OPS!', 'Selecione um projeto antes de finalizar a tarefa!')
+            //     return;
+            // }
+            if (this.descricaoTarefa === '') {
+                this.notificar(TipoNotificacao.ATENCAO, 'Ops!', 'De um nome para sua tarefa')
                 return;
             }
 
             // começar a contagem
-            // 1seg = 100ms
+            // 1seg = 1000ms
             this.cronometroRodando = true
             this.cronometro = setInterval(() => {
                 this.tempoEmSegundos += 1
@@ -64,6 +66,13 @@ export default defineComponent({
             clearInterval(this.cronometro)
             this.$emit('aoTemporizadorFinalizado', this.tempoEmSegundos)
             this.tempoEmSegundos = 0
+        },
+        alternar() {
+            if (this.cronometroRodando) {
+                this.finalizar();
+            } else {
+                this.iniciar();
+            }
         }
     },
     setup() {

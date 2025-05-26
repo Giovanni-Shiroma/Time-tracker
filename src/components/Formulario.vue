@@ -2,7 +2,7 @@
     <div class="box formulario">
         <div class="columns">
             <div class="column is-5" role="form" aria-label="Formulário para criação de uma nova trafea">
-                <input type="text" class="input" placeholder="Qual tarefa você deseja iniciar ?" v-model="descricao" />
+                <input type="text" class="input" placeholder="Dê um nome para a sua tarefa" v-model="descricao" />
             </div>
             <div class="column is-3">
                 <div class="select">
@@ -15,7 +15,8 @@
                 </div>
             </div>
             <div class="column">
-                <Temporizador @aoTemporizadorFinalizado="finalizarTarefa" :idProjeto="idProjeto"/>
+                <Temporizador @aoTemporizadorFinalizado="finalizarTarefa" :idProjeto="idProjeto"
+                    :descricaoTarefa="descricao" />
             </div>
         </div>
     </div>

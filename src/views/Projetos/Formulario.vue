@@ -45,13 +45,18 @@ export default defineComponent({
     },
     methods: {
         salvar() {
-            if (this.id) {
-                this.store.commit(ALTERA_PROJETO, {
-                    id: this.id,
-                    name: this.nomeDoProjeto,
-                });
+            if (this.nomeDoProjeto !== '') {
+                if (this.id) {
+                    this.store.commit(ALTERA_PROJETO, {
+                        id: this.id,
+                        name: this.nomeDoProjeto,
+                    });
+                } else {
+                    this.store.commit(ADICIONA_PROJETO, this.nomeDoProjeto);
+                }
             } else {
-                this.store.commit(ADICIONA_PROJETO, this.nomeDoProjeto);
+                this.notificar(TipoNotificacao.FALHA, 'Ops!', 'O seu projeto precisa de um nome!');
+                return;
             }
             this.nomeDoProjeto = '';
             this.notificar(TipoNotificacao.SUCESSO, 'Excelente!', 'O projeto foi cadastrado com sucesso!');
@@ -68,3 +73,9 @@ export default defineComponent({
     }
 })
 </script>
+
+<style scoped>
+.field .label {
+    color: var(--texto-primario);
+}
+</style>
