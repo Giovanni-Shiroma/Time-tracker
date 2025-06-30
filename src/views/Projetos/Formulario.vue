@@ -19,9 +19,10 @@
 <script lang="ts">
 import { TipoNotificacao } from '@/interfaces/INotificacao';
 import { useStore } from '@/store';
-import { ADICIONA_PROJETO, ALTERA_PROJETO } from '@/store/tipo-mutacoes';
-import { defineComponent } from 'vue';
+import { defineComponent, ref } from 'vue';
 import useNotificador from '@/hooks/notificador'
+import { ALTERAR_PROJETOS, CADASTRAR_PROJETOS } from '@/store/tipo-acoes';
+import { useRouter } from 'vue-router';
 
 export default defineComponent({
     // eslint-disable-next-line vue/multi-word-component-names
@@ -31,44 +32,48 @@ export default defineComponent({
             type: String,
         }
     },
-    mounted() {
-        if (this.id) {
-            console.log('teste')
-            const projeto = this.store.state.projetos.find(proj => proj.id == this.id)
-            this.nomeDoProjeto = projeto?.name || ''
-        }
-    },
-    data() {
-        return {
-            nomeDoProjeto: '',
-        }
-    },
-    methods: {
-        salvar() {
-            if (this.nomeDoProjeto !== '') {
-                if (this.id) {
-                    this.store.commit(ALTERA_PROJETO, {
-                        id: this.id,
-                        name: this.nomeDoProjeto,
-                    });
-                } else {
-                    this.store.commit(ADICIONA_PROJETO, this.nomeDoProjeto);
-                }
-            } else {
-                this.notificar(TipoNotificacao.FALHA, 'Ops!', 'O seu projeto precisa de um nome!');
-                return;
-            }
-            this.nomeDoProjeto = '';
-            this.notificar(TipoNotificacao.SUCESSO, 'Excelente!', 'O projeto foi cadastrado com sucesso!');
-            this.$router.push('/projetos');
-        },
-    },
-    setup() {
+    setup(props) {
+        const router = useRouter() 
+
         const store = useStore()
         const { notificar } = useNotificador()
+
+        const nomeDoProjeto = ref("");
+
+        if (props.id) {
+            const projeto = store.state.projeto.projetos.find(
+                proj => proj.id == props.id
+            );
+            nomeDoProjeto.value = projeto?.name || '';
+        }
+
+        const lidarComSucesso = () => {
+            nomeDoProjeto.value = '';
+            notificar(TipoNotificacao.SUCESSO, 'Excelente!', 'O projeto foi cadastrado com sucesso!');
+            router.push('/projetos');
+        }
+
+        const salvar = () => {
+            if (nomeDoProjeto.value !== '') {
+                if (props.id) {
+                    store.dispatch(ALTERAR_PROJETOS, {
+                        id: props.id,
+                        name: nomeDoProjeto.value,
+                    })
+                        .then(() => lidarComSucesso());
+                } else {
+                    store.dispatch(CADASTRAR_PROJETOS, nomeDoProjeto.value)
+                        .then(() => lidarComSucesso())
+                }
+            } else {
+                notificar(TipoNotificacao.FALHA, 'Ops!', 'O seu projeto precisa de um nome!');
+                return;
+            }
+        }
+
         return {
-            store,
-            notificar
+            nomeDoProjeto,
+            salvar
         }
     }
 })

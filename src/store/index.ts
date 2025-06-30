@@ -1,52 +1,29 @@
-import IProjeto from "@/interfaces/IProjeto";
 import { InjectionKey } from "vue";
 import { createStore, Store, useStore as vuexUseStore } from "vuex";
-import { ADICIONA_PROJETO, ADICIONA_TAREFA, ALTERA_PROJETO, EXCLUIR_PROJETO, NOTIFICAR } from "./tipo-mutacoes";
+import { NOTIFICAR } from "./tipo-mutacoes";
 import { INotificacao } from "@/interfaces/INotificacao";
-import ITarefa from "@/interfaces/ITarefas";
+import { EstadoProjeto, projeto } from "./modulo/projeto";
+import { EstadoTarefa, tarefa } from "./modulo/projeto/tarefa";
 
-interface Estado {
-    projetos: IProjeto[];
+export interface Estado {
     notificacoes: INotificacao[];
-    tarefas: ITarefa[];
+    tarefa: EstadoTarefa;
+    projeto: EstadoProjeto,
 }
 
 export const key: InjectionKey<Store<Estado>> = Symbol()
 
 export const store = createStore<Estado>({
     state: {
-        projetos: [],
         notificacoes: [],
-        tarefas: [],
+        tarefa: {
+            tarefas: [],
+        },
+        projeto: {
+            projetos: [],
+        }
     },
     mutations: {
-        [ADICIONA_PROJETO](state, nomeDoProjeto: string) {
-            const projeto = {
-                id: new Date().toISOString(),
-                name: nomeDoProjeto
-            } as IProjeto
-            state.projetos.push(projeto)
-        },
-
-        [ALTERA_PROJETO](state, projeto: IProjeto) {
-            const index = state.projetos.findIndex(proj => proj.id == projeto.id)
-            state.projetos[index] = projeto
-        },
-
-        [EXCLUIR_PROJETO](state, id: string) {
-            state.projetos = state.projetos.filter(proj => proj.id != id)
-        },
-
-        [ADICIONA_TAREFA](state, payload: ITarefa) {
-            const tarefa = {
-                id: new Date().toISOString(),
-                descricao: payload.descricao,
-                duracaoEmSegundos: payload.duracaoEmSegundos,
-                projeto: payload.projeto,
-            } as ITarefa
-            state.tarefas.push(tarefa);
-        },
-
         [NOTIFICAR](state, novaNotificacao: INotificacao) {
 
             novaNotificacao.id = new Date().getTime();
@@ -56,6 +33,13 @@ export const store = createStore<Estado>({
                 state.notificacoes = state.notificacoes.filter(notificacao => notificacao.id != novaNotificacao.id)
             }, 3000);
         }
+    },
+    actions: {
+
+    },
+    modules: {
+        projeto,
+        tarefa,
     }
 })
 

@@ -49,9 +49,9 @@ export default defineComponent({
     computed: {
         textoBotao() {
             if (this.modoDarkAtivo) {
-                return 'Modo light'
+                return 'Lightmode'
             }
-            return 'Modo dark'
+            return 'Darkmode'
         },
         iconDark() {
             if (this.modoDarkAtivo) {

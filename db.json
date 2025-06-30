@@ -1,0 +1,63 @@
+{
+  "projetos": [
+    {
+      "id": 1,
+      "name": "Tracker"
+    },
+    {
+      "id": 2,
+      "name": "vuex "
+    },
+    {
+      "id": 3,
+      "name": "Estudando padrões de arquitetura"
+    }
+  ],
+  "tarefas": [
+    {
+      "id": 1,
+      "duracaoEmSegundos": 120,
+      "descricao": "configuração do ambiente",
+      "projeto": {
+        "id": 1,
+        "name": "Tracker"
+      }
+    },
+    {
+      "duracaoEmSegundos": 4,
+      "descricao": "refatoração do vuex ",
+      "projeto": {
+        "id": 2,
+        "name": "vuex teste"
+      },
+      "id": 2
+    },
+    {
+      "duracaoEmSegundos": 4,
+      "descricao": "teste",
+      "projeto": {
+        "id": 1,
+        "name": "Tracker"
+      },
+      "id": 3
+    },
+    {
+      "duracaoEmSegundos": 8,
+      "descricao": "testess",
+      "projeto": {
+        "id": 2,
+        "name": "vuex "
+      },
+      "id": 4
+    },
+    {
+      "duracaoEmSegundos": 3,
+      "descricao": "ase",
+      "projeto": {
+        "id": 2,
+        "name": "vuex "
+      },
+      "id": 5
+    }
+  ]
+}
