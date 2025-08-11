@@ -5,12 +5,12 @@
       "name": "Tracker"
     },
     {
-      "id": 2,
-      "name": "vuex "
-    },
-    {
       "id": 3,
       "name": "Estudando padrões de arquitetura"
+    },
+    {
+      "name": "Next.js",
+      "id": 4
     }
   ],
   "tarefas": [
@@ -52,12 +52,21 @@
     },
     {
       "duracaoEmSegundos": 3,
-      "descricao": "ase",
+      "descricao": "altera",
       "projeto": {
         "id": 2,
         "name": "vuex "
       },
       "id": 5
+    },
+    {
+      "duracaoEmSegundos": 7,
+      "descricao": "Introdução ",
+      "projeto": {
+        "name": "Next.js",
+        "id": 4
+      },
+      "id": 6
     }
   ]
 }

@@ -7,3 +7,4 @@ export const NOTIFICAR = 'NOTIFICAR'
 
 export const ADICIONA_TAREFA = 'ADICIONA_TAREFA'
 export const ALTERA_TAREFA = 'ALTERA_TAREFA'
+export const REMOVER_TAREFA = 'REMOVER_TAREFA';

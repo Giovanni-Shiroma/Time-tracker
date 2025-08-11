@@ -5,14 +5,14 @@
 </template>
 
 <script lang="ts">
-import  {defineComponent} from "vue"
+import { defineComponent } from "vue"
 
 export default defineComponent({
     name: 'BoxTarefas',
-    data () {
+    data() {
         return {
             estilos: {
-                background: '#ffcd77'
+                background: '#FED674'
             }
         }
     }
@@ -21,7 +21,7 @@ export default defineComponent({
 
 
 <style scoped>
-    /* .box {
-        background: #ffcd77;
-    } */
+/* .box {
+    background: #FED674;
+} */
 </style>

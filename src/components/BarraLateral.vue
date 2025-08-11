@@ -1,9 +1,16 @@
 <template>
     <header>
-        <h1>
-            <img src="../assets/logo.png" alt="">
-        </h1>
-        <button class="button" @click="alterarTema">
+        <div class="div-logo">
+            <img src="../assets/logo.png" alt="" class="logo">
+        </div>
+
+        <!-- Nome do usuário -->
+        <div v-if="userName" class="mt-3 mb-4 has-text-white">
+            <h1 class="has-text-white">Olá, {{ userName }}!</h1>
+        </div>
+
+        <!-- Botão de alternar tema -->
+        <button class="button is-hidden" @click="alterarTema">
             <span class="icon mr-1">
                 <svg v-if="modoDarkAtivo" xmlns="http://www.w3.org/2000/svg" width="20" fill="none" viewBox="0 0 24 24"
                     stroke-width="1.5" stroke="currentColor" class="size-6">
@@ -18,6 +25,7 @@
             </span>
             {{ textoBotao }}
         </button>
+        <!-- Menu -->
         <nav class="navbar-nav mt-5">
             <ul>
                 <li>
@@ -29,6 +37,13 @@
                         <i class="fas fa-project-diagram"></i>
                         projetos
                     </router-link>
+                    <router-link to="/profile" class="link">
+                        <i class="fas fa-user"></i>
+                        meu perfil
+                    </router-link>
+
+                    <button @click="deslogar" class="button is-danger is-outlined"
+                        :class="load ? 'is-loading' : ''">Sair</button>
                 </li>
             </ul>
         </nav>
@@ -36,35 +51,52 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { getAuth, signOut, onAuthStateChanged } from 'firebase/auth';
+import { defineComponent, ref, onMounted, computed } from 'vue';
 
 export default defineComponent({
     name: 'BarraLateral',
-    emitis: ['aoTemaAlterado'],
-    data() {
+    emits: ['aoTemaAlterado'],
+    setup(_, { emit }) {
+        const modoDarkAtivo = ref(false);
+        const userName = ref<string | null>(null);
+        const load = ref(false);
+
+        const alterarTema = () => {
+            modoDarkAtivo.value = !modoDarkAtivo.value;
+            emit('aoTemaAlterado', modoDarkAtivo.value);
+        };
+
+        const deslogar = async () => {
+            const auth = getAuth();
+            try {
+                load.value = true;
+                await signOut(auth);
+                window.location.href = '/login';
+            } catch (error) {
+                console.error('Erro ao deslogar:', error);
+            }
+        };
+
+        onMounted(() => {
+            const auth = getAuth();
+            onAuthStateChanged(auth, (user) => {
+                if (user) {
+                    userName.value = user.displayName || user.email || 'Usuário';
+                } else {
+                    userName.value = null;
+                }
+            });
+        });
+
         return {
-            modoDarkAtivo: false
-        }
-    },
-    computed: {
-        textoBotao() {
-            if (this.modoDarkAtivo) {
-                return 'Lightmode'
-            }
-            return 'Darkmode'
-        },
-        iconDark() {
-            if (this.modoDarkAtivo) {
-                return 'fa-sun-o'
-            }
-            return 'fa-moon-o'
-        }
-    },
-    methods: {
-        alterarTema() {
-            this.modoDarkAtivo = !this.modoDarkAtivo
-            this.$emit('aoTemaAlterado', this.modoDarkAtivo)
-        }
+            modoDarkAtivo,
+            alterarTema,
+            deslogar,
+            userName,
+            textoBotao: computed(() => (modoDarkAtivo.value ? 'Lightmode' : 'Darkmode')),
+            load,
+        };
     }
 });
 </script>
@@ -72,7 +104,7 @@ export default defineComponent({
 <style scoped>
 header {
     padding: 1rem;
-    background: #0d3b66;
+    background: #2E4A62;
     width: 100%;
     height: 100vh;
     text-align: center;
@@ -103,8 +135,14 @@ header {
     color: #FAF0CA;
 }
 
+
+
 .link.router-link-active {
     color: #FAF0CA;
     border-bottom: 1px solid;
+}
+
+.logo {
+    height: 250px;
 }
 </style>

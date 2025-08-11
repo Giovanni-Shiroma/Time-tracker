@@ -9,16 +9,14 @@
         <table class="table is-fullwidth mt-2">
             <thead>
                 <tr>
-                    <th>ID</th>
                     <th>Nome</th>
-                    <th>Ações</th>
+                    <th class="has-text-right">Ações</th>
                 </tr>
             </thead>
             <tbody>
                 <tr v-for="projeto in projetos" :key="projeto.id">
-                    <td>{{ projeto.id }}</td>
                     <td>{{ projeto.name }}</td>
-                    <td>
+                    <td class="has-text-right">
                         <router-link :to="`/projetos/${projeto.id}`" class="button">
                             <span class="icon is-small">
                                 <i class="fas fa-pencil-alt"></i>
@@ -50,12 +48,20 @@ export default defineComponent({
         }
     },
     setup() {
-        const store = useStore()
-        store.dispatch(OBTER_PROJETOS)
-        return {
-            projetos: computed(() => store.state.projeto.projetos),
-            store
+        const store = useStore();
+        const projetos = computed(() => store.state.projeto.projetos);
+
+        // carregar os projetos só se ainda não estiverem carregados
+        if (!projetos.value.length) {
+            store.dispatch(OBTER_PROJETOS).catch((err) => {
+                console.error('Erro ao carregar projetos:', err);
+            });
         }
+
+        return {
+            projetos,
+            store
+        };
     }
 })
 </script>

@@ -1,11 +1,13 @@
 <template>
-  <main class="columns is-gapless is-multiline" :class="{ 'modo-escuro': modoDarkAtivo }">
-    <div class="column is-one-quarter">
-      <BarraLateral @aoTemaAlterado="trocarTema" />
-    </div>
-    <div class="column is-three-quarter conteudo">
-      <Notificacoes />
-      <router-view></router-view>
+  <main :class="{ 'modo-escuro': modoDarkAtivo }">
+    <div class="columns is-gapless is-multiline">
+      <div v-if="!$route.path.includes('register') && !$route.path.includes('login')" class="column is-one-quarter">
+        <BarraLateral @aoTemaAlterado="trocarTema" />
+      </div>
+      <div class="column is-three-quarter conteudo">
+        <Notificacoes />
+        <router-view></router-view>
+      </div>
     </div>
   </main>
 </template>
@@ -40,8 +42,9 @@ export default defineComponent({
 }
 
 main {
-  --bg-primario: #fff;
+  --bg-primario: #C0C2C1;
   --texto-primario: #000;
+  font-family: 'Inter', sans-serif;
 }
 
 main.modo-escuro {

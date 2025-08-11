@@ -37,7 +37,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref, watchEffect } from 'vue';
+import { computed, defineComponent, ref } from 'vue';
 import Formulario from '../components/Formulario.vue';
 import Tarefa from '../components/Tarefa.vue'
 import ITarefa from '../interfaces/ITarefas'
@@ -82,9 +82,6 @@ export default defineComponent({
       return this.store.state.tarefa.tarefas.length === 0;
     },
 
-    // tarefas(): ITarefa[] {
-    //   return this.store.state.tarefa.tarefas;
-    // },
   },
   setup() {
     const store = useStore()
@@ -93,18 +90,14 @@ export default defineComponent({
 
     const filtro = ref('')
 
-    // const tarefas = computed(() =>
-    //   store.state.tarefa.tarefas.filter(
-    //     (t) => !filtro.value || t.descricao.includes(filtro.value)
-    //   )
-    // );
-
-    watchEffect(() => {
-      store.dispatch(OBTER_TAREFAS, filtro.value)
-    });
+    const tarefas = computed(() => {
+      return store.state.tarefa.tarefas.filter((t: any) =>
+        t.descricao.toLowerCase().includes(filtro.value.toLowerCase())
+      )
+    })
 
     return {
-      tarefas: computed(() => store.state.tarefa.tarefas),
+      tarefas,
       store,
       filtro
     }
