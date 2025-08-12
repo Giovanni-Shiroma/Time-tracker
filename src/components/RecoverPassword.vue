@@ -1,7 +1,7 @@
 <template>
     <div>
-        <div class="login-div">
-            <form class="box login-box" @submit.prevent="onSubmit">
+        <div class="forgot-pass-div">
+            <form class="box forgot-pass-box" @submit.prevent="onSubmit">
                 <div class="forgot-password">
                     <div class="title-login">
                         <span class="title">Esqueceu a senha</span>
@@ -121,11 +121,11 @@ export default defineComponent({
     font-size: 12px;
 }
 
-.login-div {
+.forgot-pass-div {
     width: 500px;
 }
 
-.login-box {
+.forgot-pass-box {
     background-color: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(15px);
     -webkit-backdrop-filter: blur(15px);
@@ -200,5 +200,22 @@ input::placeholder {
 
 .link:hover {
     color: #FAF0CA;
+}
+
+@media (max-width: 768px) {
+    .forgot-pass-div {
+        width: 100vw;
+    }
+
+    .forgot-pass-box {
+        border: none;
+        box-shadow: none;
+        background: none;
+        padding: 3rem;
+    }
+
+    .title-login {
+        font-size: 1.2rem;
+    }
 }
 </style>

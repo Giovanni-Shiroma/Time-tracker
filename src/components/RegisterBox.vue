@@ -91,16 +91,16 @@ export default defineComponent({
     const router = useRouter();
     const showPassword = ref(false);
     const showConfirmPassword = ref(false);
-    
-    
+
+
     function togglePassword() {
       showPassword.value = !showPassword.value;
     }
-    
+
     function toggleConfirmPassword() {
       showConfirmPassword.value = !showConfirmPassword.value;
     }
-    
+
     const handleCadastro = async () => {
       const emailValid = computed(() => /\S+@\S+\.\S+/.test(email.value))
       error.value = '';
@@ -232,5 +232,23 @@ input::placeholder {
 
 .link:hover {
   color: #FAF0CA;
+}
+
+
+@media (max-width: 768px) {
+  .register-div {
+    width: 100vw;
+  }
+
+  .register-box {
+    border: none;
+    box-shadow: none;
+    background: none;
+    padding: 3rem;
+  }
+
+  .title-login {
+    font-size: 1.2rem;
+  }
 }
 </style>
