@@ -198,4 +198,21 @@ input::placeholder {
 .link:hover {
     color: #FAF0CA;
 }
+
+@media (max-width: 768px) {
+    .login-div {
+        width: 100vw;
+    }
+
+    .login-box {
+        border: none;
+        box-shadow: none;
+        background: none;
+        padding: 3rem;
+    }
+
+    .title-login {
+        font-size: 1.2rem;
+    }
+}
 </style>
