@@ -1,13 +1,13 @@
 <template>
     <section>
-        <form @submit.prevent="salvar">
+        <form class="form-project" @submit.prevent="salvar">
             <div class="field">
                 <label for="nomeDoProjeto" class="label">
                     Nome do projeto
                 </label>
                 <input type="text" class="input" v-model="nomeDoProjeto" id="nomedoProjet" />
             </div>
-            <div class="field">
+            <div class="field is-flex is-justify-content-flex-end">
                 <button class="button" type="submit">
                     Salvar
                 </button>
@@ -33,7 +33,7 @@ export default defineComponent({
         }
     },
     setup(props) {
-        const router = useRouter() 
+        const router = useRouter()
 
         const store = useStore()
         const { notificar } = useNotificador()
@@ -82,5 +82,11 @@ export default defineComponent({
 <style scoped>
 .field .label {
     color: var(--texto-primario);
+}
+
+@media (max-width: 500px) {
+    .form-project {
+        min-height: 22vh;
+    }
 }
 </style>

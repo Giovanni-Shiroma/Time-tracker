@@ -7,9 +7,12 @@
             <div class="column is-3">
                 {{ tarefa.projeto?.name || 'N/D' }}
             </div>
-            <div class="column is-4">
+            <div class="column is-4 cronometro">
                 <Cronometro :tempoEmSegundos="tarefa.duracaoEmSegundos" />
             </div>
+        </div>
+        <div class="mr-4 is-hidden-tablet">
+            <Cronometro :tempoEmSegundos="tarefa.duracaoEmSegundos" />
         </div>
         <button class="button ml-2 is-danger" @click="deletarTarefa(tarefa.id)">
             <span class="icon is-small">
@@ -68,5 +71,22 @@ export default defineComponent({
     width: 100%;
     margin-bottom: 0px;
     margin-top: 0;
+}
+
+@media (max-width: 768px) {
+    .clicavel {
+        display: flex;
+    }
+}
+
+
+@media (max-width: 768px) {
+    .clicavel {
+        display: initial;
+    }
+
+    .cronometro {
+        display: none;
+    }
 }
 </style>

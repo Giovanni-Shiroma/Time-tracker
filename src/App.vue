@@ -55,4 +55,11 @@ main.modo-escuro {
 .conteudo {
   background-color: var(--bg-primario);
 }
+
+
+@media (max-width: 768px) {
+  .conteudo {
+    min-height: 40vh;
+  }
+}
 </style>

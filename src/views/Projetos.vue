@@ -24,4 +24,10 @@ export default defineComponent({
 .title {
     color: var(--texto-primario) !important;
 }
+
+@media (max-width: 525px) {
+    .title {
+       text-align: center;     
+    }
+}
 </style>

@@ -189,4 +189,21 @@ input::placeholder {
     background: #FED674;
     color: #FFF;
 }
+
+@media (max-width: 768px) {
+    .register-div {
+        width: 100vw;
+    }
+
+    .register-box {
+        border: none;
+        box-shadow: none;
+        background: none;
+        padding: 3rem;
+    }
+
+    .title-login {
+        font-size: 1.2rem;
+    }
+}
 </style>

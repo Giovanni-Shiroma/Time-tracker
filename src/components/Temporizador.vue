@@ -86,3 +86,7 @@ export default defineComponent({
 });
 
 </script>
+
+<style lang="sss" scoped>
+
+</style>
