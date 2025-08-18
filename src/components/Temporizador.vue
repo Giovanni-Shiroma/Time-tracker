@@ -138,7 +138,11 @@ export default defineComponent({
         },
 
         handleVisibilityChange() {
-            if (!document.hidden) this.tick(true);
+            if (!document.hidden && this.cronometroRodando) {
+                this.tick(true);
+                this.pausar();
+                this.iniciar();
+            }
         }
     },
 
