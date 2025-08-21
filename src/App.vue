@@ -62,4 +62,18 @@ main.modo-escuro {
     min-height: 40vh;
   }
 }
+
+.select:not(.is-multiple):not(.is-loading)::after {
+  border-color: #000000;
+}
+
+.select select:focus {
+  border-color: #b5b5b5 !important;
+  box-shadow: none !important;
+}
+
+.input:focus {
+  border-color: #b5b5b5 !important;
+  box-shadow: none;
+}
 </style>

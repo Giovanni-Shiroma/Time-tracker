@@ -1,22 +1,24 @@
 <template>
-    <div class="is-flex is-align-items-center is-justify-content-end">
-        <Cronometro :tempoEmSegundos="contador" />
+    <div class="is-flex is-align-items-center is-justify-content-end form-actions">
+        <Cronometro class="timer" :tempoEmSegundos="contador" />
 
-        <!-- Start/Pause -->
-        <button class="button ml-4" @click="alternar">
-            <span class="icon">
-                <i :class="cronometroRodando ? 'fas fa-pause' : 'fas fa-play'"></i>
-            </span>
-            <span>{{ cronometroRodando ? 'pause' : 'start' }}</span>
-        </button>
+        <div class="is-flex">
+            <!-- Start/Pause -->
+            <button class="button ml-4" @click="alternar">
+                <span class="icon">
+                    <i :class="cronometroRodando ? 'fas fa-pause' : 'fas fa-play'"></i>
+                </span>
+                <span>{{ cronometroRodando ? 'pause' : 'start' }}</span>
+            </button>
 
-        <!-- Finalizar -->
-        <button class="button ml-2 is-danger" @click="finalizar" :disabled="totalSegundos === 0">
-            <span class="icon">
-                <i class="fas fa-stop"></i>
-            </span>
-            <span>finalizar</span>
-        </button>
+            <!-- Finalizar -->
+            <button class="button ml-2 is-danger" @click="finalizar" :disabled="totalSegundos === 0">
+                <span class="icon">
+                    <i class="fas fa-stop"></i>
+                </span>
+                <span>finalizar</span>
+            </button>
+        </div>
     </div>
 </template>
 
@@ -170,4 +172,13 @@ export default defineComponent({
 
 <style scoped>
 /* estilos opcionais */
+@media (max-width: 375px) {
+    .form-actions {
+        flex-direction: column;
+    }
+
+    .timer {
+        margin-bottom: 20px;
+    }
+}
 </style>

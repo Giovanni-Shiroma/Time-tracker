@@ -21,7 +21,7 @@
                 <div class="field focus-wrapper">
                     <label class="label">Email</label>
                     <p class="control has-icons-left has-icons-right">
-                        <input v-model="userEmail" class="input" type="email" placeholder="Email" readonly />
+                        <input v-model="userEmail" class="input" type="email" placeholder="Email" readonly disabled />
                         <span class="icon is-small is-left">
                             <i class="fas fa-envelope"></i>
                         </span>

@@ -1,6 +1,6 @@
 <template>
     <Box class="is-flex is-align-items-center">
-        <div class="columns clicavel" @click="tarefaClicada">
+        <div class="columns task-info">
             <div class="column is-4">
                 {{ tarefa?.descricao || 'Tarefa sem descrição' }}
             </div>
@@ -11,14 +11,23 @@
                 <Cronometro :tempoEmSegundos="tarefa.duracaoEmSegundos" />
             </div>
         </div>
-        <div class="mr-4 is-hidden-tablet">
-            <Cronometro :tempoEmSegundos="tarefa.duracaoEmSegundos" />
+        <div class="is-flex task-timer-actions">
+            <div class="mr-4 is-hidden-tablet timer-responsive">
+                <Cronometro :tempoEmSegundos="tarefa.duracaoEmSegundos" />
+            </div>
+            <div class="is-flex task-actions">
+                <button class="button ml-2" @click="tarefaClicada">
+                    <span class="icon is-small">
+                        <i class=" fas fa-pencil-alt"></i>
+                    </span>
+                </button>
+                <button class="button ml-2 is-danger" @click="deletarTarefa(tarefa.id)">
+                    <span class="icon is-small">
+                        <i class=" fas fa-trash"></i>
+                    </span>
+                </button>
+            </div>
         </div>
-        <button class="button ml-2 is-danger" @click="deletarTarefa(tarefa.id)">
-            <span class="icon is-small">
-                <i class=" fas fa-trash"></i>
-            </span>
-        </button>
     </Box>
 </template>
 
@@ -66,22 +75,39 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.clicavel {
-    cursor: pointer;
+.task-info {
     width: 100%;
     margin-bottom: 0px;
     margin-top: 0;
 }
 
+.task-actions {
+    display: flex;
+}
+
 @media (max-width: 768px) {
-    .clicavel {
+    .task-info {
         display: flex;
     }
+
+    .task-timer-actions {
+        flex-direction: column;
+        align-items: end;
+    }
+
+    .timer-responsive {
+        margin-right: 0 !important;
+    }
+
+    .task-actions {
+        margin-top: 20px;
+    }
+
 }
 
 
 @media (max-width: 768px) {
-    .clicavel {
+    .task-info {
         display: initial;
     }
 

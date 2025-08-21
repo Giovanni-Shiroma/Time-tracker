@@ -145,4 +145,10 @@ header {
 .logo {
     height: 250px;
 }
+
+@media (max-width: 1024px) {
+    .logo {
+        height: 200px;
+    }
+}
 </style>

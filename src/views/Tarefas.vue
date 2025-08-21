@@ -1,10 +1,14 @@
 <template>
   <Formulario @aoSalvarTarefa="salvarTarefa" />
-  <div class="lista">
+  <div v-if="loading" class="box has-text-centered loader-bg">
+    <button class="loader-button button is-loading is-white is-large" disabled></button>
+  </div>
+  <div v-else class="lista">
     <Box v-if="listaEstaVazia">
       Você não está muito produtivo hoje :(
     </Box>
-    <div class="field">
+
+    <div v-else class="field">
       <p class="control has-icons-left">
         <input v-model="filtro" class="input" type="text" placeholder="Digite para filtrar" />
         <span class="icon is-small is-left">
@@ -81,13 +85,16 @@ export default defineComponent({
     listaEstaVazia(): boolean {
       return this.store.state.tarefa.tarefas.length === 0;
     },
-
   },
+
   setup() {
     const store = useStore()
-    store.dispatch(OBTER_TAREFAS)
-    store.dispatch(OBTER_PROJETOS)
+    const loading = ref(true);
 
+    store.dispatch(OBTER_TAREFAS).then(() => {
+      loading.value = false
+    })
+    store.dispatch(OBTER_PROJETOS)
     const filtro = ref('')
 
     const tarefas = computed(() => {
@@ -97,10 +104,22 @@ export default defineComponent({
     })
 
     return {
+      loading,
       tarefas,
       store,
-      filtro
+      filtro,
     }
   }
 });
 </script>
+
+<style scoped>
+.loader-bg {
+  background: transparent;
+  box-shadow: none;
+}
+
+.loader-button {
+  background-color: transparent !important;
+}
+</style>

@@ -1,7 +1,7 @@
 <template>
     <div class="box formulario">
-        <div class="columns">
-            <div class="column is-5" role="form" aria-label="Formulário para criação de uma nova trafea">
+        <div class="columns form-div">
+            <div class="column is-5 input-form" role="form" aria-label="Formulário para criação de uma nova trafea">
                 <input type="text" class="input" placeholder="Dê um nome para a sua tarefa" v-model="descricao" />
             </div>
             <div class="is-flex project-timer is-justify-content-space-between">
@@ -74,7 +74,17 @@ export default defineComponent({
     width: 100%;
 }
 
-@media (max-width: 525px) {
+@media (max-width: 1340px) {
+    .form-div {
+        flex-direction: column;
+    }
+
+    .input-form {
+        width: 100%;
+    }
+}
+
+@media (max-width: 565px) {
     .project-timer {
         flex-direction: column;
         align-items: center;
